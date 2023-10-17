@@ -1,24 +1,11 @@
 from flask import Flask, render_template, redirect, request, flash
 from flask_mail import Mail, Message
 from config import email,senha
-import smtplib
 
-fromaddr = '......................'  
-toaddrs  = 'contatojricardogoulart@gmail.com'  
-msg = 'Spam email Test'  
 
-username = 'contatojricardogoulart@gmail.com'  
-password = 'reczsweqcvhggzzm' # Here
-
-server = smtplib.SMTP('smtp.gmail.com', 587)  
-server.ehlo()
-server.starttls()
-server.login(username, password)  
-server.sendmail(fromaddr, toaddrs, msg)  
-server.quit()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'reczsweqcvhggzzm'
+app.config['SECRET_KEY'] = senha
 
 
 mail_settings = {
@@ -27,7 +14,7 @@ mail_settings = {
     "MAIL_USE_TLS": False,
     "MAIL_USE_SSL": True,
     "MAIL_USERNAME": email,
-    "MAIL_PASSWORD": "reczsweqcvhggzzm"
+    "MAIL_PASSWORD": senha
 }
 
 app.config.update(mail_settings)
@@ -36,8 +23,8 @@ mail = Mail(app)
 
 class Contato:
     def __init__(self,nome,email,mensagem):
-     self.nome = nome,
-     self.email = email,
+     self.nome = nome
+     self.email = email
      self.mensagem = mensagem
 
 @app.route('/')
