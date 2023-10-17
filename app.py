@@ -1,9 +1,25 @@
 from flask import Flask, render_template, redirect, request, flash
 from flask_mail import Mail, Message
 from config import email,senha
+import smtplib
+
+fromaddr = '......................'  
+toaddrs  = 'contatojricardogoulart@gmail.com'  
+msg = 'Spam email Test'  
+
+username = 'contatojricardogoulart@gmail.com'  
+password = 'reczsweqcvhggzzm' # Here
+
+server = smtplib.SMTP('smtp.gmail.com', 587)  
+server.ehlo()
+server.starttls()
+server.login(username, password)  
+server.sendmail(fromaddr, toaddrs, msg)  
+server.quit()
 
 app = Flask(__name__)
-app.secret_key = 'jricardogoulart'
+app.config['SECRET_KEY'] = 'reczsweqcvhggzzm'
+
 
 mail_settings = {
     "MAIL_SERVER": 'smtp.gmail.com',
@@ -11,7 +27,7 @@ mail_settings = {
     "MAIL_USE_TLS": False,
     "MAIL_USE_SSL": True,
     "MAIL_USERNAME": email,
-    "MAIL_PASSWORD": senha
+    "MAIL_PASSWORD": "reczsweqcvhggzzm"
 }
 
 app.config.update(mail_settings)
@@ -39,10 +55,10 @@ def send():
 
    msg = Message ( 
       subject=f'{formContato.nome} te enviou uma mensagem',
-      sender = app.confg.get("MAIL_USERNAME"),
-      recipients = ['contatojricardogoulart@gmail.com', app.config.ger("MAIL_USERNAME")],
+      sender = app.config.get("MAIL_USERNAME"),
+      recipients = ['contatojricardogoulart@gmail.com', app.config.get("MAIL_USERNAME")],
       body = f'''
-      f'{formContato.nome} com o e-mail {formContato.email}, te enviou uma mensagem:
+      {formContato.nome} com o e-mail {formContato.email}, te enviou uma mensagem:
 
       {formContato.mensagem}
 
