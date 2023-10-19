@@ -9,8 +9,13 @@ organization = "jricardogoulart"
 [build]
   publish = "."  
 
+
+
 [env]
   PORT = 5000  # Porta interna em que o Flask está ouvindo
+  
+  flyctl secrets set --name EMAIL --from-env .env --json
+flyctl secrets set --name SENHA --from-env .env --json
 
 [[services]]
   internal_port = 5000  # Porta interna em que o Flask está ouvindo

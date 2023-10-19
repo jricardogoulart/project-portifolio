@@ -18,3 +18,4 @@ EXPOSE 5000
 
 # Comando para iniciar o aplicativo (ajuste conforme seu aplicativo)
 CMD ["python", "app.py"]
+
